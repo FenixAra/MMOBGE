@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  board_id: 1
+  state: MyText
+
+two:
+  name: MyText
+  board_id: 1
+  state: MyText
