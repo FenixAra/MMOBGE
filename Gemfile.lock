@@ -50,6 +50,7 @@ GEM
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
+    digest (0.0.1)
     erubis (2.7.0)
     execjs (2.7.0)
     globalid (0.3.6)
@@ -75,6 +76,7 @@ GEM
     multi_json (1.12.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    pg (0.17.1)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -145,8 +147,10 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  digest
   jbuilder (~> 2.0)
   jquery-rails
+  pg
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
