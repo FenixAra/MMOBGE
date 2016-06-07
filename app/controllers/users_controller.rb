@@ -20,6 +20,26 @@ class UsersController < ApplicationController
     render json: {status: 'created'}
   end
 
+  def verify_email_exists
+    @body = JSON.parse(request.body.read)
+    @user = User.find_by(email: @body["email"])
+    if @user
+      render json: {exists: true}
+    else
+      render json: {exists: false} 
+    end
+  end
+
+  def verify_user_name_exists
+    @body = JSON.parse(request.body.read)
+    @user = User.find_by(user_name: @body["user_name"])
+    if @user
+      render json: {exists: true}
+    else
+      render json: {exists: false} 
+    end
+  end
+
   def login
     puts request.body.read
     @login_info = JSON.parse(request.body.read)

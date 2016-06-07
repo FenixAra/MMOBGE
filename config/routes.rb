@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       get '/' => 'users#index'
       post '/' => 'users#save'
       post '/login' => 'users#login'
+      post '/email' => 'users#verify_email_exists'
+      post '/username' => 'users#verify_user_name_exists'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
