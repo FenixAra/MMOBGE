@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       post '/login' => 'users#login'
       post '/email' => 'users#verify_email_exists'
       post '/username' => 'users#verify_user_name_exists'
+      get '/:id' => 'users#info'
+    end
+
+    scope '/boards' do
+      get '/' => 'boards#index'
+      post '/' => 'boards#save'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

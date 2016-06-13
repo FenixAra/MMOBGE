@@ -1,23 +1,28 @@
 require 'digest/md5'
 
 class UsersController < ApplicationController
-  skip_before_filter :verify_authenticity_token
 
   def index
     render json: { count: User.count ,users: User.all}
   end
 
+  def info
+    render json: User.find_by(id: params[:id])
+  end
+
   def save
     @user = JSON.parse(request.body.read)
+    action = 'created'
     @existing_user = User.find_by(user_name: @user["user_name"])
     if @existing_user
       @user['password'] = Digest::MD5.hexdigest(@user['password'])
       @existing_user.update(@user)
+      action = 'updated'
     else 
       @user['password'] = Digest::MD5.hexdigest(@user['password'])
       User.create(@user)
     end
-    render json: {status: 'created'}
+    render json: {status: action}
   end
 
   def verify_email_exists
