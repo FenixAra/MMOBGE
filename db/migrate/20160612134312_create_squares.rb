@@ -10,6 +10,7 @@ class CreateSquares < ActiveRecord::Migration
     end
 
     add_index :squares, [:board_id, :i, :j]
+    add_index :squares, [:board_id, :name]
     execute "ALTER TABLE squares ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES boards(id)"
   end
 end

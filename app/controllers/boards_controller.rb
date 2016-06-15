@@ -36,4 +36,31 @@ class BoardsController < ApplicationController
     end
     render json: {status: status}
   end
+
+  def set_record
+    board_info = JSON.parse(request.body.read)
+    @board = Board.find_by(id: board_info["id"])
+    @board.update({records: board_info["records"]})
+    @board.squares.update({state: {}})
+    render json: {}
+  end
+
+  def get_board
+    board = Board.find_by(id: params["id"])
+    render json: {board: board, squares: board.squares.all}
+  end
+
+  def update_square_state
+    square_info = JSON.parse(request.body.read)
+    @square = Board.find_by(board_id: square_info["board_id"], name: square_info["name"])
+    if @square
+      @square.update({state: square_info["state"]})
+    end
+    render json: {}
+  end
+
+  def get_square_state
+    square_info = JSON.parse(request.body.read)
+    render json: Board.find_by(board_id: square_info["board_id"], name: square_info["name"])
+  end
 end

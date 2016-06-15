@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     scope '/boards' do
       get '/' => 'boards#index'
       post '/' => 'boards#save'
+      get '/square/state' => 'boards#get_square_state'
+      post '/square/state' => 'boards#update_square_state'
+      post '/:id/record' => 'boards#set_record'
+      get '/:id' => 'boards#get_board'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
