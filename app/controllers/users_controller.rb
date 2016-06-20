@@ -15,7 +15,9 @@ class UsersController < ApplicationController
     action = 'created'
     @existing_user = User.find_by(user_name: @user["user_name"])
     if @existing_user
-      @user['password'] = Digest::MD5.hexdigest(@user['password'])
+      if @user['password']
+        @user['password'] = Digest::MD5.hexdigest(@user['password'])
+      end
       @existing_user.update(@user)
       action = 'updated'
     else 
