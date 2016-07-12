@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     @user = User.find_by(user_name: @login_info["user_name"])
     puts @user
     if @user['password'] == Digest::MD5.hexdigest(@login_info['password'])
-      render json: {id: @user.id, message: 'login success'}
+      render json: {id: @user.id, message: 'login success', email: @user.email, first_name: @user.first_name, last_name: @user.last_name}
     else
       render json: {message: 'invalid user_name/password'}, :status => 401
     end 
