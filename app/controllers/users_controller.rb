@@ -62,9 +62,12 @@ class UsersController < ApplicationController
     change_password_info = JSON.parse(request.body.read)
     p change_password_info
     user = User.find_by(id: change_password_info["id"])
+    p user
     if !user
       render json: {error: "Invalid user ID"}, :status => 401
     else
+      p Digest::MD5.hexdigest(change_password_info[:old_password])
+      p Digest::MD5.hexdigest(change_password_info[:new_password])
       if  Digest::MD5.hexdigest(change_password_info[:old_password]) == user[:password]
         user.update({password: Digest::MD5.hexdigest(change_password_info[:new_password])})
       else
