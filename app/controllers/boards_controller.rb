@@ -1,7 +1,13 @@
 class BoardsController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def index
-    render json: { count: Board.count ,boards: Board.all}
+    p params
+    if !params["client_id"]
+      render json: {error: "Client ID not specified"}, :status => 400
+    else
+      boards = Board.where({client_id: params["client_id"]})
+      render json: { count: boards.count ,boards: boards.all}
+    end
   end
 
   def save
