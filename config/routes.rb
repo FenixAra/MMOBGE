@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post '/login' => 'users#login'
       post '/email' => 'users#verify_email_exists'
       post '/username' => 'users#verify_user_name_exists'
+      post '/change/password' => 'users#change_password'
       get '/:id' => 'users#info'
     end
 
