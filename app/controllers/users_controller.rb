@@ -60,6 +60,7 @@ class UsersController < ApplicationController
 
   def change_password
     change_password_info = JSON.parse(request.body.read)
+    p change_password_info
     user = User.find_by(id: change_password_info["id"])
     if !user
       render json: {error: "Invalid user ID"}, :status => 401
