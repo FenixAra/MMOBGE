@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612134312) do
+ActiveRecord::Schema.define(version: 20160717150501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,10 @@ ActiveRecord::Schema.define(version: 20160612134312) do
     t.integer "rows"
     t.integer "columns"
     t.json    "records"
+    t.string  "status"
   end
+
+  add_index "boards", ["status"], name: "index_boards_on_status", using: :btree
 
   create_table "clients", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.text "name"

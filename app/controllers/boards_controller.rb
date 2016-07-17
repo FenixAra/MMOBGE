@@ -5,7 +5,7 @@ class BoardsController < ApplicationController
     if !params["client_id"]
       render json: {error: "Client ID not specified"}, :status => 400
     else
-      boards = Board.where({client_id: params["client_id"]})
+      boards = Board.where({client_id: params["client_id"], status: "OPEN"})
       render json: { count: boards.count ,boards: boards.all}
     end
   end
