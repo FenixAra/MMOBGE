@@ -5,8 +5,30 @@ class BoardsController < ApplicationController
     if !params["client_id"]
       render json: {error: "Client ID not specified"}, :status => 400
     else
-      boards = Board.where({client_id: params["client_id"], status: "OPEN"})
-      render json: { count: boards.count ,boards: boards.all}
+      boards = Board.includes(:board_users).where({client_id: params["client_id"], status: "OPEN"})
+      board_with_user_info = []
+      boards.each do |board|
+        board_json =  JSON.parse(board.to_json)
+        board_json["user_details"] = []
+        board.board_users.each do |board_user|
+          user_info = JSON.parse(User.find(board_user[:user_id]).to_json)
+          user_info.delete("password")
+          board_json["user_details"].push(user_info)
+        end
+        board_with_user_info.push(board_json)
+      end
+      render json: { count: boards.count ,boards: board_with_user_info}
+    end
+  end
+
+  def add_user
+    board_user_info = JSON.parse(request.body.read)
+    existing_board_user = BoardUser.find_by({board_id: board_user_info["board_id"], user_id: board_user_info["user_id"]})
+    if existing_board_user
+      render json:{}
+    else
+      BoardUser.create({board_id: board_user_info["board_id"], user_id: board_user_info["user_id"]})
+      render json:{}
     end
   end
 

@@ -11,11 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717150501) do
+ActiveRecord::Schema.define(version: 20160717165257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "board_users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid "board_id"
+    t.uuid "user_id"
+  end
 
   create_table "boards", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.text    "users",     array: true
@@ -51,6 +56,8 @@ ActiveRecord::Schema.define(version: 20160717150501) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
+  add_foreign_key "board_users", "boards", name: "fk_board_users_board_id"
+  add_foreign_key "board_users", "users", name: "fk_board_users_user_id"
   add_foreign_key "boards", "clients", name: "fk_client_id"
   add_foreign_key "squares", "boards", name: "fk_board_id"
 end

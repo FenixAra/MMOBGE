@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     scope '/boards' do
       get '/' => 'boards#index'
       post '/' => 'boards#save'
+      post '/user' => 'boards#add_user'
       get '/square/state' => 'boards#get_square_state'
       post '/square/state' => 'boards#update_square_state'
       post '/:id/record' => 'boards#set_record'
