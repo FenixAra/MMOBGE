@@ -42,10 +42,12 @@ class BoardsController < ApplicationController
     if existing_board
       if existing_board["rows"] == board_info["rows"] && existing_board["columns"] == board_info["columns"]
         existing_board.update(board_info)
-        for i in 0..(board_info["rows"]-1) 
-          for j in 0..(board_info["columns"]-1)
-            square = existing_board.squares.find_by({board_id: existing_board["id"], i: i, j: j})
-            square.update({board_id: existing_board["id"], i: i, j: j, name: squares[i][j], state: {}})
+        if squares.length > 0
+          for i in 0..(board_info["rows"]-1) 
+            for j in 0..(board_info["columns"]-1)
+              square = existing_board.squares.find_by({board_id: existing_board["id"], i: i, j: j})
+              square.update({board_id: existing_board["id"], i: i, j: j, name: squares[i][j], state: {}})
+            end
           end
         end
         status = "updated"
