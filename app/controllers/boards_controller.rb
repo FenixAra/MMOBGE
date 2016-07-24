@@ -76,8 +76,15 @@ class BoardsController < ApplicationController
   end
 
   def get_board
-    board = Board.find_by(id: params["id"])
-    render json: {board: board, squares: board.squares.all}
+    board = Board.includes(:board_users).find_by(id: params["id"])
+    board_json =  JSON.parse(board.to_json)
+    board_json["user_details"] = []
+    board.board_users.each do |board_user|
+      user_info = JSON.parse(User.find(board_user[:user_id]).to_json)
+      user_info.delete("password")
+      board_json["user_details"].push(user_info)
+    end 
+    render json: {board: board_json, squares: board.squares.all}
   end
 
   def update_square_state
