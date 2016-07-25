@@ -83,13 +83,13 @@ class BoardsController < ApplicationController
       user_info = JSON.parse(User.find(board_user[:user_id]).to_json)
       user_info.delete("password")
       board_json["user_details"].push(user_info)
-    end 
+    end
     render json: {board: board_json, squares: board.squares.all}
   end
 
   def update_square_state
     square_info = JSON.parse(request.body.read)
-    square = Board.find_by(board_id: square_info["board_id"], name: square_info["name"])
+    square = Square.find_by(board_id: square_info["board_id"], name: square_info["name"])
     if square
       square.update({state: square_info["state"]})
     end
